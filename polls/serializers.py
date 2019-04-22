@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Vote, Choice, Poll
 from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
 
 
 class VoteSerializers(serializers.ModelSerializer):
@@ -36,4 +37,5 @@ class UserSerializer(serializers.ModelSerializer):
                     username=validated_data['username'])
         user.set_password(validated_data['password'])
         user.save()
+        Token.objects.create(user=user)
         return user
